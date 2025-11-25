@@ -20,10 +20,11 @@ jobs:
           fetch-depth: 1
 
       - name: Run Claude PR Action
+        id: claude
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: "このPRの内容を厳しくレビューし、マージできる品質かどうか判断して。修正が必要なポイントも提示して。"
+          prompt: "このPRの内容を厳しくレビューし、マージできる品質かどうか判断して。修正が必要なポイントも提示して。PRにコメントとして投稿してください。"
           claude_args: |
             --model claude-sonnet-4-5
             --allowedTools mcp__github,Read,Grep,Glob,WebSearch,LS,Edit,Bash(npm:*)
