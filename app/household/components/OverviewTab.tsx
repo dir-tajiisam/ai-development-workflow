@@ -53,53 +53,53 @@ export default function OverviewTab({
   return (
     <div className="space-y-6">
       {/* Balance Card */}
-      <div className="bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-3xl shadow-2xl p-8 text-white transform hover:scale-105 transition-transform duration-300">
-        <p className="text-emerald-100 text-lg mb-2">総資産残高</p>
-        <p className="text-6xl font-bold mb-4 animate-pulse">{formatCurrency(totalBalance)}</p>
-        <div className="h-1 w-32 bg-white/30 rounded-full"></div>
+      <div className="glass-morph rounded-3xl p-8 text-white transform hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_40px_rgba(0,255,255,0.6)] animate-float border-2 border-cyan-400">
+        <p className="text-cyan-300 text-xl mb-2 font-bold">総資産残高</p>
+        <p className="text-7xl font-bold mb-4 text-cyan-400 animate-neon-pulse">{formatCurrency(totalBalance)}</p>
+        <div className="h-2 w-40 bg-gradient-to-r from-cyan-400 via-magenta-400 to-yellow-400 rounded-full shadow-[0_0_15px_rgba(0,255,255,0.8)]"></div>
       </div>
 
       {/* Monthly Summary */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Income Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+        <div className="glass-morph rounded-2xl p-6 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(0,128,255,0.6)] transition-all duration-300 border border-blue-400 animate-slide-up">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-2xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(0,128,255,0.8)] animate-float">
               💰
             </div>
             <div>
-              <p className="text-slate-600 text-sm">今月の収入</p>
-              <p className="text-3xl font-bold text-blue-600">{formatCurrency(stats.totalIncome)}</p>
+              <p className="text-cyan-300 text-sm font-bold">今月の収入</p>
+              <p className="text-4xl font-bold text-blue-400 animate-flicker">{formatCurrency(stats.totalIncome)}</p>
             </div>
           </div>
         </div>
 
         {/* Expense Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 transform hover:scale-105 hover:shadow-2xl transition-all duration-300">
+        <div className="glass-morph rounded-2xl p-6 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,255,0.6)] transition-all duration-300 border border-magenta-400 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center text-2xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-magenta-500 to-red-600 rounded-xl flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(255,0,255,0.8)] animate-float" style={{ animationDelay: '1s' }}>
               💸
             </div>
             <div>
-              <p className="text-slate-600 text-sm">今月の支出</p>
-              <p className="text-3xl font-bold text-red-600">{formatCurrency(stats.totalExpense)}</p>
+              <p className="text-cyan-300 text-sm font-bold">今月の支出</p>
+              <p className="text-4xl font-bold text-magenta-400 animate-flicker">{formatCurrency(stats.totalExpense)}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Monthly Balance */}
-      <div className="bg-white rounded-2xl shadow-xl p-6">
+      <div className="glass-morph rounded-2xl p-6 border-2 border-yellow-400 hover:shadow-[0_0_30px_rgba(255,255,0,0.6)] transition-all animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-slate-600 text-lg mb-2">今月の収支</p>
-            <p className={`text-4xl font-bold ${stats.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <p className="text-cyan-300 text-xl mb-2 font-bold">今月の収支</p>
+            <p className={`text-5xl font-bold ${stats.balance >= 0 ? 'text-green-400 animate-neon-pulse' : 'text-red-400 animate-neon-pulse'}`}>
               {formatCurrency(stats.balance)}
             </p>
           </div>
-          <div className={`w-20 h-20 rounded-full flex items-center justify-center text-4xl ${
-            stats.balance >= 0 ? 'bg-green-100' : 'bg-red-100'
-          }`}>
+          <div className={`w-24 h-24 rounded-full flex items-center justify-center text-5xl ${
+            stats.balance >= 0 ? 'bg-green-500/20 border-2 border-green-400 shadow-[0_0_20px_rgba(0,255,128,0.8)]' : 'bg-red-500/20 border-2 border-red-400 shadow-[0_0_20px_rgba(255,0,0,0.8)]'
+          } animate-float`}>
             {stats.balance >= 0 ? '📈' : '📉'}
           </div>
         </div>
@@ -108,22 +108,22 @@ export default function OverviewTab({
       {/* Add Transaction Button */}
       <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <Dialog.Trigger asChild>
-          <button className="w-full py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+          <button className="w-full py-4 bg-gradient-to-r from-cyan-500 to-magenta-500 text-white rounded-2xl font-bold text-xl shadow-[0_0_30px_rgba(0,255,255,0.8)] hover:shadow-[0_0_40px_rgba(255,0,255,0.9)] hover:scale-105 transition-all duration-300 border-2 border-cyan-400 animate-glow-pulse">
             ➕ 新しい取引を追加
           </button>
         </Dialog.Trigger>
 
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in" />
-          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md animate-scale-in">
-            <Dialog.Title className="text-3xl font-bold text-slate-800 mb-6">
+          <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" />
+          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 glass-morph rounded-3xl shadow-[0_0_50px_rgba(0,255,255,0.6)] p-8 w-full max-w-md animate-scale-in border-2 border-cyan-400">
+            <Dialog.Title className="text-4xl font-bold text-cyan-400 mb-6 animate-neon-pulse">
               取引を追加
             </Dialog.Title>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Type Selection */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-cyan-300 mb-2">
                   種類
                 </label>
                 <div className="grid grid-cols-2 gap-3">
@@ -133,10 +133,10 @@ export default function OverviewTab({
                       setTransactionType('income');
                       setCategory('給与');
                     }}
-                    className={`py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`py-3 rounded-xl font-bold transition-all duration-300 ${
                       transactionType === 'income'
-                        ? 'bg-blue-500 text-white shadow-lg scale-105'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        ? 'bg-blue-500 text-white shadow-[0_0_20px_rgba(0,128,255,0.8)] scale-105 border-2 border-blue-400'
+                        : 'bg-slate-800 text-cyan-300 border border-cyan-400/30 hover:border-cyan-400'
                     }`}
                   >
                     💰 収入
@@ -147,10 +147,10 @@ export default function OverviewTab({
                       setTransactionType('expense');
                       setCategory('食費');
                     }}
-                    className={`py-3 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`py-3 rounded-xl font-bold transition-all duration-300 ${
                       transactionType === 'expense'
-                        ? 'bg-red-500 text-white shadow-lg scale-105'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        ? 'bg-magenta-500 text-white shadow-[0_0_20px_rgba(255,0,255,0.8)] scale-105 border-2 border-magenta-400'
+                        : 'bg-slate-800 text-cyan-300 border border-cyan-400/30 hover:border-cyan-400'
                     }`}
                   >
                     💸 支出
@@ -160,16 +160,16 @@ export default function OverviewTab({
 
               {/* Category */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-cyan-300 mb-2">
                   カテゴリ
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as CategoryType)}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                 >
                   {categories.map(cat => (
-                    <option key={cat} value={cat}>
+                    <option key={cat} value={cat} className="bg-slate-900">
                       {cat}
                     </option>
                   ))}
@@ -178,7 +178,7 @@ export default function OverviewTab({
 
               {/* Amount */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-cyan-300 mb-2">
                   金額
                 </label>
                 <input
@@ -189,13 +189,13 @@ export default function OverviewTab({
                   min="0"
                   step="1"
                   required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 placeholder-cyan-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                 />
               </div>
 
               {/* Date */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-cyan-300 mb-2">
                   日付
                 </label>
                 <input
@@ -203,13 +203,13 @@ export default function OverviewTab({
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-cyan-300 mb-2">
                   説明（任意）
                 </label>
                 <input
@@ -217,7 +217,7 @@ export default function OverviewTab({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="例: スーパーで買い物"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 placeholder-cyan-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                 />
               </div>
 
@@ -226,14 +226,14 @@ export default function OverviewTab({
                 <Dialog.Close asChild>
                   <button
                     type="button"
-                    className="flex-1 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-colors"
+                    className="flex-1 py-3 bg-slate-700 text-cyan-100 rounded-xl font-bold hover:shadow-[0_0_15px_rgba(100,100,100,0.8)] transition-all border border-slate-500"
                   >
                     キャンセル
                   </button>
                 </Dialog.Close>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                  className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-magenta-500 text-white rounded-xl font-bold shadow-[0_0_20px_rgba(0,255,255,0.6)] hover:shadow-[0_0_30px_rgba(255,0,255,0.8)] hover:scale-105 transition-all border-2 border-cyan-400"
                 >
                   追加
                 </button>
