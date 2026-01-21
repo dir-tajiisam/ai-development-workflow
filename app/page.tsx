@@ -146,21 +146,23 @@ export default function Home() {
   const getStatusColor = (status: TaskStatus) => {
     switch (status) {
       case 'Pending':
-        return 'bg-gray-200 text-gray-700';
+        return 'bg-slate-800 text-yellow-400 border border-yellow-400 shadow-[0_0_10px_rgba(255,255,0,0.5)]';
       case 'Running':
-        return 'bg-blue-200 text-blue-700';
+        return 'bg-slate-800 text-cyan-400 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] animate-glow-pulse';
       case 'Completed':
-        return 'bg-green-200 text-green-700';
+        return 'bg-slate-800 text-green-400 border border-green-400 shadow-[0_0_10px_rgba(0,255,128,0.5)]';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen cyber-grid py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">TODO管理アプリ</h1>
+        <h1 className="text-6xl font-bold text-cyan-400 mb-8 text-center animate-neon-pulse tracking-wider">
+          TODO管理アプリ
+        </h1>
 
         {/* Add Task Form */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="glass-morph rounded-2xl p-6 mb-6 animate-slide-in">
           <div className="flex gap-2">
             <input
               type="text"
@@ -168,11 +170,11 @@ export default function Home() {
               onChange={(e) => setNewTaskTitle(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addTask()}
               placeholder="新しいタスクを入力..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-3 bg-slate-900 border-2 border-cyan-400/50 rounded-lg focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] text-cyan-100 placeholder-cyan-600 transition-all"
             />
             <button
               onClick={addTask}
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+              className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-magenta-500 text-white rounded-lg hover:shadow-[0_0_20px_rgba(0,255,255,0.8)] transition-all font-bold tracking-wide animate-float"
             >
               追加
             </button>
@@ -182,13 +184,13 @@ export default function Home() {
         {/* Tasks List */}
         <div className="space-y-4">
           {tasks.map(task => (
-            <div key={task.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-4 border-b border-gray-200">
+            <div key={task.id} className="glass-morph rounded-2xl overflow-hidden animate-slide-up hover:shadow-[0_0_30px_rgba(0,255,255,0.4)] transition-all">
+              <div className="p-4 border-b border-cyan-400/30">
                 <div className="flex items-center gap-3">
                   {/* Expand/Collapse Button */}
                   <button
                     onClick={() => toggleTaskExpanded(task.id)}
-                    className="text-gray-500 hover:text-gray-700 transition-colors"
+                    className="text-cyan-400 hover:text-magenta-400 hover:shadow-[0_0_10px_rgba(255,0,255,0.8)] transition-all"
                   >
                     <svg
                       className={`w-5 h-5 transition-transform ${task.isExpanded ? 'rotate-90' : ''}`}
@@ -212,24 +214,24 @@ export default function Home() {
                             if (e.key === 'Enter') saveTaskEdit(task.id);
                             if (e.key === 'Escape') cancelTaskEdit();
                           }}
-                          className="flex-1 px-3 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="flex-1 px-3 py-1 bg-slate-900 border-2 border-cyan-400 rounded focus:outline-none focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] text-cyan-100"
                           autoFocus
                         />
                         <button
                           onClick={() => saveTaskEdit(task.id)}
-                          className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
+                          className="px-3 py-1 bg-green-500 text-white rounded hover:shadow-[0_0_15px_rgba(0,255,128,0.8)] text-sm border border-green-400 transition-all"
                         >
                           保存
                         </button>
                         <button
                           onClick={cancelTaskEdit}
-                          className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm"
+                          className="px-3 py-1 bg-slate-700 text-cyan-100 rounded hover:shadow-[0_0_15px_rgba(100,100,100,0.8)] text-sm border border-slate-500 transition-all"
                         >
                           キャンセル
                         </button>
                       </div>
                     ) : (
-                      <h3 className="text-lg font-semibold text-gray-800">{task.title}</h3>
+                      <h3 className="text-lg font-semibold text-cyan-100 animate-flicker">{task.title}</h3>
                     )}
                   </div>
 
@@ -239,10 +241,10 @@ export default function Home() {
                       <button
                         key={status}
                         onClick={() => updateTaskStatus(task.id, status)}
-                        className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                        className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                           task.status === status
                             ? getStatusColor(status)
-                            : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                            : 'bg-slate-800 text-slate-500 border border-slate-600 hover:border-cyan-400 hover:text-cyan-400'
                         }`}
                       >
                         {status}
@@ -255,13 +257,13 @@ export default function Home() {
                     <>
                       <button
                         onClick={() => startEditingTask(task)}
-                        className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                        className="px-3 py-1 text-cyan-400 hover:text-cyan-200 hover:shadow-[0_0_10px_rgba(0,255,255,0.6)] rounded transition-all border border-cyan-400/50"
                       >
                         編集
                       </button>
                       <button
                         onClick={() => deleteTask(task.id)}
-                        className="px-3 py-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                        className="px-3 py-1 text-magenta-400 hover:text-magenta-200 hover:shadow-[0_0_10px_rgba(255,0,255,0.6)] rounded transition-all border border-magenta-400/50"
                       >
                         削除
                       </button>
@@ -271,19 +273,19 @@ export default function Home() {
 
                 {/* Subtask Count */}
                 {task.subtasks.length > 0 && (
-                  <div className="mt-2 text-sm text-gray-500">
-                    サブタスク: {task.subtasks.filter(st => st.status === 'Completed').length} / {task.subtasks.length}
+                  <div className="mt-2 text-sm text-cyan-300">
+                    サブタスク: <span className="text-magenta-400 font-bold">{task.subtasks.filter(st => st.status === 'Completed').length}</span> / {task.subtasks.length}
                   </div>
                 )}
               </div>
 
               {/* Subtasks Section */}
               {task.isExpanded && (
-                <div className="p-4 bg-gray-50">
+                <div className="p-4 bg-slate-900/50">
                   <div className="space-y-2">
                     {task.subtasks.map(subtask => (
-                      <div key={subtask.id} className="bg-white rounded p-3 flex items-center gap-3">
-                        <div className="w-1 h-8 bg-blue-300 rounded-full"></div>
+                      <div key={subtask.id} className="bg-slate-800/60 rounded-xl p-3 flex items-center gap-3 border border-cyan-400/20 hover:border-cyan-400/50 transition-all hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+                        <div className="w-1 h-8 bg-gradient-to-b from-cyan-400 to-magenta-400 rounded-full shadow-[0_0_10px_rgba(0,255,255,0.8)]"></div>
 
                         {/* Subtask Title */}
                         <div className="flex-1">
@@ -297,24 +299,24 @@ export default function Home() {
                                   if (e.key === 'Enter') saveSubtaskEdit(task.id, subtask.id);
                                   if (e.key === 'Escape') cancelSubtaskEdit();
                                 }}
-                                className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="flex-1 px-2 py-1 bg-slate-900 border-2 border-cyan-400 rounded focus:outline-none focus:shadow-[0_0_10px_rgba(0,255,255,0.5)] text-cyan-100"
                                 autoFocus
                               />
                               <button
                                 onClick={() => saveSubtaskEdit(task.id, subtask.id)}
-                                className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-xs"
+                                className="px-2 py-1 bg-green-500 text-white rounded hover:shadow-[0_0_10px_rgba(0,255,128,0.8)] text-xs border border-green-400 transition-all"
                               >
                                 保存
                               </button>
                               <button
                                 onClick={cancelSubtaskEdit}
-                                className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 text-xs"
+                                className="px-2 py-1 bg-slate-700 text-cyan-100 rounded hover:shadow-[0_0_10px_rgba(100,100,100,0.8)] text-xs border border-slate-500 transition-all"
                               >
                                 キャンセル
                               </button>
                             </div>
                           ) : (
-                            <span className="text-gray-700">{subtask.title}</span>
+                            <span className="text-cyan-200">{subtask.title}</span>
                           )}
                         </div>
 
@@ -324,10 +326,10 @@ export default function Home() {
                             <button
                               key={status}
                               onClick={() => updateSubtaskStatus(task.id, subtask.id, status)}
-                              className={`px-2 py-1 rounded-full text-xs font-medium transition-all ${
+                              className={`px-2 py-1 rounded-full text-xs font-bold transition-all ${
                                 subtask.status === status
                                   ? getStatusColor(status)
-                                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                                  : 'bg-slate-900 text-slate-500 border border-slate-700 hover:border-cyan-400 hover:text-cyan-400'
                               }`}
                             >
                               {status.charAt(0)}
@@ -340,13 +342,13 @@ export default function Home() {
                           <>
                             <button
                               onClick={() => startEditingSubtask(subtask)}
-                              className="px-2 py-1 text-blue-600 hover:bg-blue-50 rounded text-sm"
+                              className="px-2 py-1 text-cyan-400 hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] rounded text-sm border border-cyan-400/50 transition-all"
                             >
                               編集
                             </button>
                             <button
                               onClick={() => deleteSubtask(task.id, subtask.id)}
-                              className="px-2 py-1 text-red-600 hover:bg-red-50 rounded text-sm"
+                              className="px-2 py-1 text-magenta-400 hover:shadow-[0_0_8px_rgba(255,0,255,0.6)] rounded text-sm border border-magenta-400/50 transition-all"
                             >
                               削除
                             </button>
@@ -370,12 +372,12 @@ export default function Home() {
                             }
                           }}
                           placeholder="サブタスクを入力..."
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="flex-1 px-3 py-2 bg-slate-900 border-2 border-cyan-400 rounded focus:outline-none focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] text-cyan-100 placeholder-cyan-600"
                           autoFocus
                         />
                         <button
                           onClick={() => addSubtask(task.id)}
-                          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+                          className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-magenta-500 text-white rounded hover:shadow-[0_0_15px_rgba(0,255,255,0.8)] text-sm font-bold transition-all"
                         >
                           追加
                         </button>
@@ -384,7 +386,7 @@ export default function Home() {
                             setAddingSubtaskToTaskId(null);
                             setNewSubtaskTitle('');
                           }}
-                          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm"
+                          className="px-4 py-2 bg-slate-700 text-cyan-100 rounded hover:shadow-[0_0_10px_rgba(100,100,100,0.8)] text-sm border border-slate-500 transition-all"
                         >
                           キャンセル
                         </button>
@@ -392,7 +394,7 @@ export default function Home() {
                     ) : (
                       <button
                         onClick={() => setAddingSubtaskToTaskId(task.id)}
-                        className="w-full mt-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                        className="w-full mt-2 px-4 py-2 border-2 border-dashed border-cyan-400/50 rounded text-cyan-400 hover:border-cyan-400 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(0,255,255,0.3)] transition-all font-bold"
                       >
                         + サブタスクを追加
                       </button>
@@ -406,9 +408,9 @@ export default function Home() {
 
         {/* Empty State */}
         {tasks.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">タスクがありません</p>
-            <p className="text-gray-400 text-sm mt-2">上のフォームから新しいタスクを追加してください</p>
+          <div className="text-center py-12 glass-morph rounded-2xl animate-pulse">
+            <p className="text-cyan-400 text-2xl font-bold mb-2 animate-neon-pulse">タスクがありません</p>
+            <p className="text-cyan-300 text-sm mt-2">上のフォームから新しいタスクを追加してください</p>
           </div>
         )}
       </div>

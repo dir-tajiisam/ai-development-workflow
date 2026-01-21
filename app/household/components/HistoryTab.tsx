@@ -53,27 +53,28 @@ export default function HistoryTab({
   return (
     <div className="space-y-4">
       {monthTransactions.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-          <div className="text-6xl mb-4">📭</div>
-          <p className="text-slate-600 text-lg">この月の取引はまだありません</p>
-          <p className="text-slate-400 text-sm mt-2">概要タブから取引を追加してください</p>
+        <div className="glass-morph rounded-2xl p-12 text-center border-2 border-yellow-400 hover:shadow-[0_0_30px_rgba(255,255,0,0.6)] transition-all">
+          <div className="text-6xl mb-4 animate-float">📭</div>
+          <p className="text-cyan-300 text-xl font-bold">この月の取引はまだありません</p>
+          <p className="text-cyan-400 text-sm mt-2">概要タブから取引を追加してください</p>
         </div>
       ) : (
         monthTransactions.map((transaction, index) => (
           <div
             key={transaction.id}
-            className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-slide-in"
+            className="glass-morph rounded-2xl p-6 hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transform hover:scale-105 transition-all duration-300 animate-slide-in border border-cyan-400/30 hover:border-cyan-400"
             style={{ animationDelay: `${index * 50}ms` }}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 flex-1">
                 {/* Icon */}
                 <div
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-md ${
+                  className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-md animate-float ${
                     transaction.type === 'income'
-                      ? 'bg-gradient-to-br from-blue-400 to-blue-600'
-                      : 'bg-gradient-to-br from-red-400 to-red-600'
+                      ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-[0_0_20px_rgba(0,128,255,0.8)]'
+                      : 'bg-gradient-to-br from-magenta-500 to-red-600 shadow-[0_0_20px_rgba(255,0,255,0.8)]'
                   }`}
+                  style={{ animationDelay: `${index * 0.5}s` }}
                 >
                   {transaction.type === 'income' ? '💰' : '💸'}
                 </div>
@@ -81,28 +82,28 @@ export default function HistoryTab({
                 {/* Transaction Info */}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-bold text-lg text-slate-800">{transaction.category}</span>
+                    <span className="font-bold text-xl text-cyan-100">{transaction.category}</span>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      className={`px-3 py-1 rounded-full text-xs font-bold border ${
                         transaction.type === 'income'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-red-100 text-red-700'
+                          ? 'bg-blue-500/20 text-blue-400 border-blue-400 shadow-[0_0_10px_rgba(0,128,255,0.5)]'
+                          : 'bg-magenta-500/20 text-magenta-400 border-magenta-400 shadow-[0_0_10px_rgba(255,0,255,0.5)]'
                       }`}
                     >
                       {transaction.type === 'income' ? '収入' : '支出'}
                     </span>
                   </div>
-                  <p className="text-slate-600 text-sm">{formatDate(transaction.date)}</p>
+                  <p className="text-cyan-300 text-sm">{formatDate(transaction.date)}</p>
                   {transaction.description && (
-                    <p className="text-slate-500 text-sm mt-1 italic">{transaction.description}</p>
+                    <p className="text-cyan-400 text-sm mt-1 italic">{transaction.description}</p>
                   )}
                 </div>
 
                 {/* Amount */}
                 <div className="text-right">
                   <p
-                    className={`text-3xl font-bold ${
-                      transaction.type === 'income' ? 'text-blue-600' : 'text-red-600'
+                    className={`text-4xl font-bold animate-neon-pulse ${
+                      transaction.type === 'income' ? 'text-blue-400' : 'text-magenta-400'
                     }`}
                   >
                     {transaction.type === 'income' ? '+' : '-'}
@@ -115,7 +116,7 @@ export default function HistoryTab({
               <div className="flex gap-2 ml-4">
                 <button
                   onClick={() => handleEdit(transaction)}
-                  className="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-colors font-medium"
+                  className="px-4 py-2 bg-slate-800 text-cyan-400 rounded-xl hover:shadow-[0_0_15px_rgba(0,255,255,0.6)] transition-all font-bold border border-cyan-400"
                 >
                   ✏️ 編集
                 </button>
@@ -125,7 +126,7 @@ export default function HistoryTab({
                       onDeleteTransaction(transaction.id);
                     }
                   }}
-                  className="px-4 py-2 bg-red-100 text-red-700 rounded-xl hover:bg-red-200 transition-colors font-medium"
+                  className="px-4 py-2 bg-slate-800 text-magenta-400 rounded-xl hover:shadow-[0_0_15px_rgba(255,0,255,0.6)] transition-all font-bold border border-magenta-400"
                 >
                   🗑️ 削除
                 </button>
@@ -138,9 +139,9 @@ export default function HistoryTab({
       {/* Edit Dialog */}
       <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in" />
-          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md animate-scale-in">
-            <Dialog.Title className="text-3xl font-bold text-slate-800 mb-6">
+          <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" />
+          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 glass-morph rounded-3xl shadow-[0_0_50px_rgba(0,255,255,0.6)] p-8 w-full max-w-md animate-scale-in border-2 border-cyan-400">
+            <Dialog.Title className="text-4xl font-bold text-cyan-400 mb-6 animate-neon-pulse">
               取引を編集
             </Dialog.Title>
 
@@ -148,7 +149,7 @@ export default function HistoryTab({
               <form onSubmit={handleUpdate} className="space-y-5">
                 {/* Type Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-cyan-300 mb-2">
                     種類
                   </label>
                   <div className="grid grid-cols-2 gap-3">
@@ -157,10 +158,10 @@ export default function HistoryTab({
                       onClick={() =>
                         setEditingTransaction({ ...editingTransaction, type: 'income', category: '給与' })
                       }
-                      className={`py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      className={`py-3 rounded-xl font-bold transition-all duration-300 ${
                         editingTransaction.type === 'income'
-                          ? 'bg-blue-500 text-white shadow-lg scale-105'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? 'bg-blue-500 text-white shadow-[0_0_20px_rgba(0,128,255,0.8)] scale-105 border-2 border-blue-400'
+                          : 'bg-slate-800 text-cyan-300 border border-cyan-400/30 hover:border-cyan-400'
                       }`}
                     >
                       💰 収入
@@ -170,10 +171,10 @@ export default function HistoryTab({
                       onClick={() =>
                         setEditingTransaction({ ...editingTransaction, type: 'expense', category: '食費' })
                       }
-                      className={`py-3 rounded-xl font-semibold transition-all duration-300 ${
+                      className={`py-3 rounded-xl font-bold transition-all duration-300 ${
                         editingTransaction.type === 'expense'
-                          ? 'bg-red-500 text-white shadow-lg scale-105'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? 'bg-magenta-500 text-white shadow-[0_0_20px_rgba(255,0,255,0.8)] scale-105 border-2 border-magenta-400'
+                          : 'bg-slate-800 text-cyan-300 border border-cyan-400/30 hover:border-cyan-400'
                       }`}
                     >
                       💸 支出
@@ -184,7 +185,7 @@ export default function HistoryTab({
 
                 {/* Category */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-cyan-300 mb-2">
                     カテゴリ
                   </label>
                   <select
@@ -196,10 +197,10 @@ export default function HistoryTab({
                         category: e.target.value as CategoryType,
                       })
                     }
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                   >
                     {categories.map(cat => (
-                      <option key={cat} value={cat}>
+                      <option key={cat} value={cat} className="bg-slate-900">
                         {cat}
                       </option>
                     ))}
@@ -208,7 +209,7 @@ export default function HistoryTab({
 
                 {/* Amount */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-cyan-300 mb-2">
                     金額
                   </label>
                   <input
@@ -218,13 +219,13 @@ export default function HistoryTab({
                     min="0"
                     step="1"
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                   />
                 </div>
 
                 {/* Date */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-cyan-300 mb-2">
                     日付
                   </label>
                   <input
@@ -232,13 +233,13 @@ export default function HistoryTab({
                     name="date"
                     defaultValue={editingTransaction.date}
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                   />
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-bold text-cyan-300 mb-2">
                     説明（任意）
                   </label>
                   <input
@@ -246,7 +247,7 @@ export default function HistoryTab({
                     name="description"
                     defaultValue={editingTransaction.description}
                     placeholder="例: スーパーで買い物"
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-cyan-400 bg-slate-900 text-cyan-100 placeholder-cyan-600 focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                   />
                 </div>
 
@@ -255,14 +256,14 @@ export default function HistoryTab({
                   <Dialog.Close asChild>
                     <button
                       type="button"
-                      className="flex-1 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-colors"
+                      className="flex-1 py-3 bg-slate-700 text-cyan-100 rounded-xl font-bold hover:shadow-[0_0_15px_rgba(100,100,100,0.8)] transition-all border border-slate-500"
                     >
                       キャンセル
                     </button>
                   </Dialog.Close>
                   <button
                     type="submit"
-                    className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                    className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-magenta-500 text-white rounded-xl font-bold shadow-[0_0_20px_rgba(0,255,255,0.6)] hover:shadow-[0_0_30px_rgba(255,0,255,0.8)] hover:scale-105 transition-all border-2 border-cyan-400"
                   >
                     更新
                   </button>
