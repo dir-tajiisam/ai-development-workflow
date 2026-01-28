@@ -120,7 +120,10 @@ export function useTetris() {
   const moveLeft = useCallback(() => {
     setGameState(prev => {
       if (!prev.currentPiece || prev.isGameOver || prev.isPaused) return prev;
-      const newPiece = { ...prev.currentPiece };
+      const newPiece = {
+        ...prev.currentPiece,
+        position: { ...prev.currentPiece.position }
+      };
       if (!checkCollision(newPiece, prev.board, { x: -1, y: 0 })) {
         newPiece.position.x--;
         return { ...prev, currentPiece: newPiece };
@@ -132,7 +135,10 @@ export function useTetris() {
   const moveRight = useCallback(() => {
     setGameState(prev => {
       if (!prev.currentPiece || prev.isGameOver || prev.isPaused) return prev;
-      const newPiece = { ...prev.currentPiece };
+      const newPiece = {
+        ...prev.currentPiece,
+        position: { ...prev.currentPiece.position }
+      };
       if (!checkCollision(newPiece, prev.board, { x: 1, y: 0 })) {
         newPiece.position.x++;
         return { ...prev, currentPiece: newPiece };
@@ -144,7 +150,10 @@ export function useTetris() {
   const moveDown = useCallback(() => {
     setGameState(prev => {
       if (!prev.currentPiece || prev.isGameOver || prev.isPaused) return prev;
-      const newPiece = { ...prev.currentPiece };
+      const newPiece = {
+        ...prev.currentPiece,
+        position: { ...prev.currentPiece.position }
+      };
       if (!checkCollision(newPiece, prev.board, { x: 0, y: 1 })) {
         newPiece.position.y++;
         return { ...prev, currentPiece: newPiece };
@@ -195,7 +204,10 @@ export function useTetris() {
   const hardDrop = useCallback(() => {
     setGameState(prev => {
       if (!prev.currentPiece || prev.isGameOver || prev.isPaused) return prev;
-      let newPiece = { ...prev.currentPiece };
+      let newPiece = {
+        ...prev.currentPiece,
+        position: { ...prev.currentPiece.position }
+      };
       while (!checkCollision(newPiece, prev.board, { x: 0, y: 1 })) {
         newPiece.position.y++;
       }
@@ -257,14 +269,18 @@ export function useTetris() {
 
   // Game loop
   useEffect(() => {
+    // Clear any existing interval first
+    if (dropIntervalRef.current) {
+      clearInterval(dropIntervalRef.current);
+      dropIntervalRef.current = null;
+    }
+
+    // Don't set new interval if game is over or paused
     if (gameState.isGameOver || gameState.isPaused) {
-      if (dropIntervalRef.current) {
-        clearInterval(dropIntervalRef.current);
-        dropIntervalRef.current = null;
-      }
       return;
     }
 
+    // Set new interval
     dropIntervalRef.current = setInterval(() => {
       moveDown();
     }, INITIAL_DROP_SPEED);
